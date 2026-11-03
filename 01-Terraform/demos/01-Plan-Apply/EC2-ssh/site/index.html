@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Quantum Commerce AI Customer Assistant: primeira infraestrutura do laboratório Terraform. Interface estática, sem inferência de IA.">
+<meta name="color-scheme" content="dark">
+<title>Quantum Commerce · AI Customer Assistant</title>
+<style>
+/* Tokens da identidade Quantum Commerce. Fonte de verdade para futuras telas do curso. */
+:root {
+  --qc-charcoal: #16171A;
+  --qc-graphite: #1E2024;
+  --qc-line: #34363C;
+  --qc-ink: #F1EFEC;
+  --qc-ink-2: #B4B1AD;
+  --qc-ink-3: #8E8B87;
+  --qc-magenta: #ED145B;
+  --qc-magenta-text: #FF5C8D;
+  --qc-magenta-deep: #B80D47;
+  --qc-font: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --qc-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --qc-gutter: clamp(16px, 4.4vw, 72px);
+  --qc-gap: clamp(16px, 2.2vw, 32px);
+  --qc-radius: 2px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; font-size: clamp(16px, 0.35vw + 14.6px, 19px); }
+body {
+  margin: 0;
+  background: var(--qc-charcoal);
+  color: var(--qc-ink);
+  font-family: var(--qc-font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--qc-gutter); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--qc-gap); }
+
+/* Cabeçalho */
+.masthead { padding-top: clamp(20px, 3vw, 40px); padding-bottom: clamp(20px, 3vw, 36px); border-bottom: 1px solid var(--qc-line); align-items: center; }
+.brand { grid-column: 1 / 8; display: flex; align-items: center; gap: 14px; color: var(--qc-ink); }
+.brand svg { width: 44px; height: 44px; flex: none; }
+.brand-name { display: block; font-size: 1.12rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; }
+.brand-sub { display: block; font-size: 0.86rem; color: var(--qc-ink-2); line-height: 1.3; }
+.lab { grid-column: 8 / 13; justify-self: end; margin: 0; font-size: 0.86rem; color: var(--qc-ink-2); text-align: right; }
+
+/* Hero */
+.hero { padding-top: clamp(32px, 4.5vw, 72px); padding-bottom: clamp(32px, 4vw, 64px); align-items: center; }
+.hero-text { grid-column: 1 / 9; }
+.status {
+  display: inline-flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  margin: 0 0 clamp(20px, 2.4vw, 32px); padding: 8px 14px 8px 12px;
+  border: 1px solid var(--qc-line); border-radius: var(--qc-radius);
+  font-size: 0.9rem; color: var(--qc-ink); max-width: 100%;
+}
+/* Quadrado vazado offline; só preenche quando o servidor injeta .on no status */
+.status::before { content: ""; width: 8px; height: 8px; border: 1.5px solid var(--qc-ink-3); flex: none; align-self: center; }
+.status:has(.on)::before { background: var(--qc-magenta); border-color: var(--qc-magenta); }
+.status b { font-weight: 600; color: var(--qc-ink-2); }
+h1 {
+  margin: 0; max-width: 15ch;
+  font-size: clamp(2.35rem, 5.4vw, 5rem); line-height: 1.02;
+  font-weight: 700; letter-spacing: -0.03em; text-wrap: balance;
+}
+.qualifier { margin: clamp(20px, 2.4vw, 28px) 0 0; max-width: 54ch; color: var(--qc-ink-2); text-wrap: pretty; }
+.hero-mark { grid-column: 9 / 13; justify-self: end; width: 100%; max-width: 440px; }
+.hero-mark svg { display: block; width: 100%; height: auto; }
+
+/* Camadas futuras: sequência real do curso, por isso numerada */
+.layers { border-top: 1px solid var(--qc-line); padding-top: clamp(28px, 3.4vw, 48px); padding-bottom: clamp(28px, 3.4vw, 48px); }
+.layers-head { grid-column: 1 / 5; }
+h2 { margin: 0; font-size: clamp(1.35rem, 1.6vw, 1.75rem); line-height: 1.2; font-weight: 700; letter-spacing: -0.015em; }
+.layers-head p { margin: 12px 0 0; color: var(--qc-ink-2); max-width: 34ch; text-wrap: pretty; }
+.layers ol { grid-column: 5 / 13; list-style: none; margin: 0; padding: 0; }
+.layers li {
+  display: grid; grid-template-columns: 3.2rem minmax(0, 1fr) auto; column-gap: 16px; align-items: baseline;
+  padding: 18px 0; border-bottom: 1px solid var(--qc-line);
+}
+.layers li:first-child { padding-top: 4px; }
+.n { font-variant-numeric: tabular-nums; color: var(--qc-ink-3); font-size: 0.86rem; }
+.cap { font-weight: 600; font-size: 1.06rem; }
+.cap small { display: block; font-weight: 400; font-size: 0.88rem; color: var(--qc-ink-2); margin-top: 2px; }
+.state {
+  font-size: 0.84rem; color: var(--qc-ink-2); white-space: nowrap;
+  padding: 3px 10px; border: 1px dashed var(--qc-ink-3); border-radius: var(--qc-radius);
+}
+
+/* Rodapé: nota + próxima etapa */
+.close { padding-bottom: clamp(32px, 5vw, 72px); row-gap: var(--qc-gap); align-items: stretch; }
+.note { grid-column: 1 / 5; margin: 0; font-size: 0.92rem; color: var(--qc-ink-2); align-self: start; max-width: 36ch; text-wrap: pretty; }
+.next { grid-column: 5 / 13; background: var(--qc-magenta-deep); color: #FFFFFF; padding: clamp(22px, 2.6vw, 36px); border-radius: var(--qc-radius); }
+.next h2 { font-size: clamp(1.25rem, 1.5vw, 1.6rem); }
+.next p { margin: 10px 0 0; max-width: 60ch; }
+.next .label { margin: 0 0 8px; font-size: 0.86rem; font-weight: 600; opacity: 0.92; }
+.host { grid-column: 1 / 13; margin: 0; padding-top: 20px; border-top: 1px solid var(--qc-line); font-size: 0.86rem; color: var(--qc-ink-2); }
+.host code { font-family: var(--qc-mono); color: var(--qc-ink); font-size: 0.92em; overflow-wrap: anywhere; }
+
+
+@media (max-width: 1020px) {
+  .hero-text { grid-column: 1 / 10; }
+  .hero-mark { grid-column: 10 / 13; }
+  .layers-head, .note { grid-column: 1 / 13; }
+  .layers-head { margin-bottom: 24px; }
+  .layers ol, .next { grid-column: 1 / 13; }
+}
+@media (max-width: 640px) {
+  .brand { grid-column: 1 / 13; }
+  .lab { grid-column: 1 / 13; justify-self: start; text-align: left; margin-top: 14px; }
+  .hero-text { grid-column: 1 / 13; order: 2; }
+  .hero-mark { grid-column: 1 / 13; order: 1; justify-self: start; max-width: 120px; margin-bottom: 28px; }
+  .layers li { grid-template-columns: 2.2rem minmax(0, 1fr); row-gap: 8px; }
+  .state { grid-column: 2; justify-self: start; white-space: normal; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- Marca Quantum Commerce: bojo do Q + órbita comercial + cauda em trilha de circuito -->
+  <symbol id="qc-mark" viewBox="0 0 120 120">
+    <circle cx="56" cy="56" r="34" fill="none" stroke="currentColor" stroke-width="9"/>
+    <path d="M70 70 L84 84 L104 84" fill="none" stroke="#ED145B" stroke-width="9" stroke-linecap="square" stroke-linejoin="miter"/>
+    <rect x="100" y="78" width="12" height="12" fill="#ED145B"/>
+  </symbol>
+</svg>
+
+<header class="wrap">
+  <div class="grid masthead">
+    <div class="brand">
+      <svg role="img" aria-label="Marca Quantum Commerce"><use href="#qc-mark"/></svg>
+      <span><span class="brand-name">Quantum Commerce</span><span class="brand-sub">AI Customer Assistant</span></span>
+    </div>
+    <p class="lab">Lab 01 · Terraform / Infrastructure as Code</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="grid hero" aria-labelledby="titulo">
+    <div class="hero-text">
+      <p class="status"><b>Status desta página</b>
+<span><!--QC:STATUS-->Pré-visualização local — arquivo aberto no navegador, sem EC2<!--/QC:STATUS--></span></p>
+      <h1 id="titulo"><!--QC:TITLE-->A interface do assistente está pronta. Falta a EC2 servi-la.<!--/QC:TITLE--></h1>
+      <p class="qualifier">A EC2 é criada com <code>terraform apply</code>; o rodapé mostra qual máquina respondeu.</p>
+    </div>
+    <div class="hero-mark" aria-hidden="true">
+      <svg viewBox="0 0 240 240">
+        <ellipse cx="112" cy="112" rx="108" ry="40" transform="rotate(-24 112 112)" fill="none" stroke="#5A5C63" stroke-width="1.5"/>
+        <circle cx="112" cy="112" r="68" fill="none" stroke="#16171A" stroke-width="26"/>
+        <circle cx="112" cy="112" r="68" fill="none" stroke="#F1EFEC" stroke-width="16"/>
+        <path d="M140 140 L166 166 L204 166" fill="none" stroke="#ED145B" stroke-width="16" stroke-linecap="square"/>
+        <rect x="198" y="155" width="22" height="22" fill="#ED145B"/>
+        <circle cx="19" cy="152" r="5" fill="#F1EFEC"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="grid layers" aria-labelledby="camadas">
+    <div class="layers-head">
+      <h2 id="camadas">O que ainda falta</h2>
+      <p>Camadas que o assistente ganha ao longo do curso. Nenhuma delas roda nesta etapa.</p>
+    </div>
+    <ol role="list">
+      <li><span class="n">01</span><span class="cap">API de pedidos<small>Consulta de status e rastreio de pedidos</small></span><span class="state">ainda não integrada</span></li>
+      <li><span class="n">02</span><span class="cap">Políticas / RAG<small>Respostas baseadas nas políticas de troca e entrega</small></span><span class="state">ainda não integradas</span></li>
+      <li><span class="n">03</span><span class="cap">Modelo de IA<small>Geração das respostas ao cliente</small></span><span class="state">ainda não integrado</span></li>
+      <li><span class="n">04</span><span class="cap">CI/CD e avaliações<small>Entrega automatizada e testes de qualidade das respostas</small></span><span class="state">ainda não configurados</span></li>
+    </ol>
+  </section>
+
+  <section class="grid close" aria-label="Próxima etapa">
+    <p class="note">Esta etapa entrega infraestrutura e uma interface estática. Ainda não há inferência de IA.</p>
+    <div class="next">
+      <p class="label">Próxima etapa</p>
+      <h2>Integrar os serviços e automatizar a entrega</h2>
+      <p>Nas próximas aulas, a mesma infraestrutura recebe a API, as políticas e o modelo, e passa a ser publicada por pipeline em vez de manualmente.</p>
+    </div>
+    <p class="host">Servido por: <!--QC:HOST-->pré-visualização local<!--/QC:HOST--></p>
+  </section>
+</main>
+</body>
+</html>

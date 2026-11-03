@@ -1,0 +1,3 @@
+module "routetable" {
+  source = "../RouteTables"
+}
