@@ -50,16 +50,16 @@ Um Codespaces com o material mais recente e credenciais AWS válidas, pronto par
 
 ### Resultado esperado desta parte
 
-Ao final desta etapa, o seu repositório no Codespaces estará atualizado com o material mais recente do repositório oficial, [`vamperst/FIAP-AI-Devops-CICD`](https://github.com/vamperst/FIAP-AI-Devops-CICD), sem descartar nada que você tenha feito.
+Ao final desta etapa, o seu repositório no Codespaces estará atualizado com o material mais recente do repositório oficial, [`vamperst/FIAP-Devops-CICD`](https://github.com/vamperst/FIAP-Devops-CICD), sem descartar nada que você tenha feito.
 
 > [!NOTE]
-> Os prints desta página mostram nomes de repositório de outras turmas e disciplinas (`FIAP-Platform-Engineering`, `FIAP-Autoglass-Serverless`). No seu ambiente o nome é `FIAP-AI-Devops-CICD`; o resto da tela é igual.
+> Os prints desta página mostram nomes de repositório de outras turmas e disciplinas (`FIAP-Platform-Engineering`, `FIAP-Autoglass-Serverless`, `FIAP-AI-Devops-CICD`). No seu ambiente o nome é `FIAP-Devops-CICD`; o resto da tela é igual.
 
 Antes do primeiro passo, identifique o seu caso:
 
 | Como você obteve o repositório | O que fazer |
 |---|---|
-| **Caminho A:** clonou direto de `vamperst/FIAP-AI-Devops-CICD` | Pule para o passo [4](#passo-4) e use o **5.1** (só `git pull`). |
+| **Caminho A:** clonou direto de `vamperst/FIAP-Devops-CICD` | Pule para o passo [4](#passo-4) e use o **5.1** (só `git pull`). |
 | **Caminho B:** fez fork para a sua conta (padrão do setup) | Faça os passos [1](#passo-1) a [3](#passo-3) (Sync fork na interface do GitHub) e depois o **5.1**. Prefere a linha de comando? Pule para o passo [4](#passo-4) e use o **5.2**. |
 
 Na dúvida, o passo [4](#passo-4) mostra como confirmar pelo terminal.
@@ -70,7 +70,7 @@ Na dúvida, o passo [4](#passo-4) mostra como confirmar pelo terminal.
 
 **1. Abra o seu fork no GitHub (Caminho B)**
 
-Acesse, na sua conta do GitHub, o repositório que você forkou da disciplina **FIAP-AI-Devops-CICD**.
+Acesse, na sua conta do GitHub, o repositório que você forkou da disciplina **FIAP-Devops-CICD**.
 
 ---
 
@@ -114,21 +114,21 @@ Se não houver nada para sincronizar, a mensagem será `This branch is not behin
 
 **4. Abra o Codespaces da disciplina**
 
-Acesse [github.com/codespaces](https://github.com/codespaces) e clique no nome do Codespace que você criou para as aulas (derivado do repositório **FIAP-AI-Devops-CICD**).
+Acesse [github.com/codespaces](https://github.com/codespaces) e clique no nome do Codespace que você criou para as aulas (derivado do repositório **FIAP-Devops-CICD**).
 
 ![](img/codespacess11.png)
 
 Para confirmar qual é o seu caminho, rode no terminal do Codespaces:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git remote -v
+cd /workspaces/FIAP-Devops-CICD && git remote -v
 ```
 
 > Saída esperada (o `origin` diz o seu caminho; pode aparecer no formato `git@github.com:...` em vez de `https://`, o que não muda nada):
 >
 > ```text
-> origin  https://github.com/vamperst/FIAP-AI-Devops-CICD (fetch)    <- Caminho A (clone direto)
-> origin  https://github.com/<SEU-USUARIO>/FIAP-AI-Devops-CICD (fetch)  <- Caminho B (fork)
+> origin  https://github.com/vamperst/FIAP-Devops-CICD (fetch)    <- Caminho A (clone direto)
+> origin  https://github.com/<SEU-USUARIO>/FIAP-Devops-CICD (fetch)  <- Caminho B (fork)
 > ```
 
 ---
@@ -140,7 +140,7 @@ cd /workspaces/FIAP-AI-Devops-CICD && git remote -v
 **5.1. Caminho A, ou Caminho B depois do `Sync fork`: traga as alterações com `git pull`**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git pull --no-rebase --no-edit origin master
+cd /workspaces/FIAP-Devops-CICD && git pull --no-rebase --no-edit origin master
 ```
 
 > Saída esperada: `Already up to date.` (nada novo) ou `Fast-forward`/`Merge made by` seguido da lista de arquivos; as duas estão certas.
@@ -150,9 +150,9 @@ O `--no-rebase` é necessário porque o Git recente exige escolher merge ou reba
 **5.2. Caminho B pela linha de comando (alternativa aos passos 1 a 3): sincronize com o `upstream` oficial**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD
-git remote add upstream https://github.com/vamperst/FIAP-AI-Devops-CICD.git 2>/dev/null \
-  || git remote set-url upstream https://github.com/vamperst/FIAP-AI-Devops-CICD.git
+cd /workspaces/FIAP-Devops-CICD
+git remote add upstream https://github.com/vamperst/FIAP-Devops-CICD.git 2>/dev/null \
+  || git remote set-url upstream https://github.com/vamperst/FIAP-Devops-CICD.git
 git fetch upstream
 git merge --no-edit upstream/master
 git push origin master
@@ -173,7 +173,7 @@ Identifique a mensagem que apareceu e siga **só** o caso correspondente. Nos do
 O merge começou e parou no meio. Desfaça só o merge (os seus commits continuam intactos) e confira o estado:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git merge --abort
+cd /workspaces/FIAP-Devops-CICD && git merge --abort
 git status
 ```
 
@@ -188,25 +188,25 @@ O Git parou **antes** de começar o merge para proteger arquivos que você alter
 **Veja o que está alterado:**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git status
+cd /workspaces/FIAP-Devops-CICD && git status
 ```
 
 **Opção 1: commitar o seu trabalho antes de atualizar** (recomendado se a alteração é sua e você quer mantê-la no histórico):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git add -A && git commit -m "meu trabalho antes de sincronizar" && git pull --no-rebase --no-edit origin master
+cd /workspaces/FIAP-Devops-CICD && git add -A && git commit -m "meu trabalho antes de sincronizar" && git pull --no-rebase --no-edit origin master
 ```
 
 **Opção 2: guardar temporariamente com `stash` e reaplicar depois** (use só se o `git status` mostrou arquivos alterados):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git stash push -m "trabalho local antes de sincronizar"
+cd /workspaces/FIAP-Devops-CICD && git stash push -m "trabalho local antes de sincronizar"
 ```
 
 Confira a saída antes de seguir. Se apareceu `No local changes to save`, não havia nada para guardar: rode só o `git pull --no-rebase --no-edit origin master` e **não** rode o `git stash pop`, que aplicaria um stash antigo sem relação com hoje. Se apareceu `Saved working directory`, continue:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git pull --no-rebase --no-edit origin master && git stash pop
+cd /workspaces/FIAP-Devops-CICD && git pull --no-rebase --no-edit origin master && git stash pop
 ```
 
 O `stash` tira as suas alterações do caminho, o `pull` atualiza e o `stash pop` devolve o seu trabalho por cima. Se o `stash pop` acusar conflito, o stash **não é apagado**. Abra cada arquivo listado como `both modified`, escolha a versão certa e apague as linhas `<<<<<<<`, `=======` e `>>>>>>>`. Depois rode `git add <arquivo>` e **não** commite. O stash continua guardado (`git stash list`) como backup até você conferir que está tudo certo.
@@ -363,7 +363,7 @@ Se você chegou até aqui, então:
 
 ## Conclusão
 
-Ritual concluído: repositório sincronizado com o oficial, Codespaces atualizado sem perder trabalho local e credenciais AWS válidas. O ambiente está pronto para a aula de AI-Devops-CICD.
+Ritual concluído: repositório sincronizado com o oficial, Codespaces atualizado sem perder trabalho local e credenciais AWS válidas. O ambiente está pronto para a aula de Devops-CICD.
 
 **Mensagem para o Diego:** repositório em dia, token novo, nenhum `ExpiredToken` à vista. Pode começar a aula.
 
@@ -383,7 +383,7 @@ Com o ambiente pronto, abra o laboratório da aula de hoje a partir do **[README
 |-------|---------|
 | **Fork** | Cópia do repositório na sua conta GitHub. |
 | **Clone direto** | Cópia local feita direto do repositório oficial, sem fork na sua conta. |
-| **`upstream`** | O repositório oficial da disciplina (`vamperst/FIAP-AI-Devops-CICD`), do qual o seu fork (Caminho B) foi criado. |
+| **`upstream`** | O repositório oficial da disciplina (`vamperst/FIAP-Devops-CICD`), do qual o seu fork (Caminho B) foi criado. |
 | **Sync fork** | Ação do GitHub que traz as atualizações do `upstream` para o seu fork. |
 | **`git pull`** | Comando que traz as atualizações do repositório remoto para o seu Codespaces local. |
 | **`git stash`** | Guarda temporariamente alterações locais para que você possa atualizar e depois reaplicá-las (`git stash pop`). |
@@ -407,7 +407,7 @@ Antes de pedir ajuda, colete:
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório:** [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório:** [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor:** [Rafael@rfbarbosa.com](mailto:Rafael@rfbarbosa.com)
 - **Antes de tudo:** confirme que a sessão do AWS Academy está ativa (bolinha verde); quase todo erro de credencial é sessão expirada.
 

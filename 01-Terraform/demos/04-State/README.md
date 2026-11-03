@@ -109,7 +109,7 @@ O bucket fica com versionamento ligado, e o Terraform passa a guardar o estado n
 O código Terraform desta demo fica na subpasta `test`. Todos os blocos seguintes repetem este `cd`, então você pode reabrir o terminal a qualquer momento.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 ls
 ```
 
@@ -171,7 +171,7 @@ Se a linha `Bucket:` vier vazia, o comando não achou nenhum bucket começando c
 O `state.tf` vem com o placeholder `base-config-SEU-RM`. O bloco troca o placeholder pelo nome real do seu bucket e mostra o resultado.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 BUCKET=$(aws s3 ls | awk '{print $3}' | grep '^base-config' | head -1)
 sed -i "s/base-config-SEU-RM/$BUCKET/" state.tf
 grep -E 'bucket|key' state.tf
@@ -236,7 +236,7 @@ Causa: o nome do bucket no `state.tf` está errado ou ainda é o placeholder `ba
 O `init` baixa o provider AWS e conecta esta pasta ao bucket.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform init
 ```
 
@@ -258,7 +258,7 @@ terraform init
 O `apply` cria uma EC2 `t3.micro` chamada `quantum-state-demo` numa subnet pública da VPC `fiap-lab` e grava o state **no S3**, não no disco.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform apply -auto-approve
 ```
 
@@ -307,7 +307,7 @@ Se só aparece a linha `Bucket:` e nada embaixo, ainda não existe state em `dem
 **Causa 2: o bucket da linha `Bucket:` não é o do `state.tf`.** Compare os dois:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 BUCKET=$(aws s3 ls | awk '{print $3}' | grep '^base-config' | head -1)
 echo "Bucket: $BUCKET"
 grep bucket state.tf
@@ -320,7 +320,7 @@ Se os nomes forem diferentes (ou o `state.tf` ainda disser `base-config-SEU-RM`)
 Para ter certeza de que o state existe, peça a lista dos recursos que o Terraform conhece:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform state list
 ```
 
@@ -378,7 +378,7 @@ Você apaga a pasta local `.terraform`, roda `init` de novo e prova que o estado
 Isso simula o Diego chegando com um Codespaces novo. Repare que não existe `terraform.tfstate` local para apagar: o state nunca esteve no disco.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 rm -rf .terraform
 ls -a
 ```
@@ -394,7 +394,7 @@ ls -a
 Além de baixar o provider, ele reconecta ao bucket, onde está o **último estado**.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform init
 ```
 
@@ -409,7 +409,7 @@ terraform init
 A instância já existe, e o Terraform descobriu isso pelo estado remoto.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform apply -auto-approve
 ```
 
@@ -419,6 +419,7 @@ terraform apply -auto-approve
 > Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
 > ```
 
+<!-- TROCAR-IMAGEM: images/apply0.png | motivo: o prompt mostra o caminho da disciplina anterior /workspaces/FIAP-AI-Devops-CICD | capturar: a mesma tela no Codespaces do repositório FIAP-Devops-CICD -->
 ![Terminal com No changes e Apply complete! Resources: 0 added, 0 changed, 0 destroyed.](images/apply0.png)
 
 Esse "nada a fazer" é a prova do conceito: mesmo sem nenhum arquivo local de estado, o Terraform sabe exatamente o que existe, porque a verdade está no S3, não no seu Codespaces. Se aparecesse `1 to add`, seria sinal de que o `state.tf` aponta para outra `key` ou outro bucket.
@@ -450,7 +451,7 @@ Você vê o lock nativo do S3 (o objeto `.tflock`) impedir que um segundo `terra
 A variável `responsavel` muda só uma tag da EC2. É uma mudança pequena, que faz o Terraform parar e perguntar `Enter a value:`. Sem nenhuma mudança pendente, o `apply` terminaria na hora com `No changes` e soltaria o lock antes do teste. **Não responda a pergunta ainda.**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform apply -var responsavel=voce
 ```
 
@@ -476,7 +477,7 @@ Enquanto este `apply` aguarda a sua resposta, o lock está **adquirido**: existe
 No Codespaces, clique no **+** do painel de terminal para abrir um segundo terminal. Nele, confirme que o lock existe no bucket:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 BUCKET=$(aws s3 ls | awk '{print $3}' | grep '^base-config' | head -1)
 aws s3 ls "s3://$BUCKET/demo-state/quantum/"
 ```
@@ -497,7 +498,7 @@ aws s3 ls "s3://$BUCKET/demo-state/quantum/"
 O Diego tenta a própria mudança. O Terraform vai **falhar ao adquirir o lock**, porque o terminal A o segura:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform apply -auto-approve -lock-timeout=0s -var responsavel=diego
 ```
 
@@ -590,7 +591,7 @@ aws s3 cp "s3://$BUCKET/demo-state/quantum/terraform.tfstate.tflock" -
 Com o `ID` em mãos, libere:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform force-unlock -force <ID-do-lock>
 ```
 
@@ -626,7 +627,7 @@ Você inspeciona o estado, renomeia um recurso **só no estado** (sem destruir/r
 `state list` só lê o state; não muda nada.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform state list
 ```
 
@@ -650,7 +651,7 @@ Os `data.*` são **leituras** (a VPC `fiap-lab`, as subnets, a oferta de `t3.mic
 **16. Veja os atributos da instância gravados no estado**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform state show aws_instance.example
 ```
 
@@ -683,7 +684,7 @@ Se a tag `Responsavel` vier `diego` ou `voce`, um `apply` da Parte 3 foi confirm
 O `state mv` muda o endereço de `aws_instance.example` para `aws_instance.web` no mapa, **sem tocar na instância real**. Em seguida, o `plan` mostra o que aconteceria se alguém rodasse `apply` agora.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform state mv aws_instance.example aws_instance.web
 terraform plan
 ```
@@ -707,7 +708,7 @@ terraform plan
 **18. Volte o nome e confirme com `plan`**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform state mv aws_instance.web aws_instance.example
 terraform plan
 ```
@@ -878,7 +879,7 @@ Documentação oficial: [Sensitive data in state](https://developer.hashicorp.co
 O `destroy` apaga o único recurso gerenciado desta pasta, a EC2 `quantum-state-demo`. A VPC `fiap-lab` e as subnets aparecem aqui só como `data` (leitura) e **continuam de pé**, porque os próximos labs e módulos as usam. O state no S3 é atualizado sob lock e fica vazio.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/04-State/test
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/04-State/test
 terraform destroy -auto-approve
 ```
 
@@ -971,7 +972,7 @@ Antes de pedir ajuda, colete estas 4 informações:
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 - **Antes de tudo**: a maioria dos erros aqui é nome de bucket incorreto no `state.tf` ou credencial expirada. Confira com `aws s3 ls`, refaça o passo 4 e rode `terraform init -reconfigure`.
 

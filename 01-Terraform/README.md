@@ -1,6 +1,6 @@
 # 01 — Terraform: Infrastructure as Code para IA
 
-Módulo prático da **Aula 2** da disciplina **AI-Devops-CICD**. Aqui você, AI DevOps Engineer da **Quantum Commerce**, escreve em código a infraestrutura em que o **Quantum Commerce AI Customer Assistant** (o Assistente de Rastreio e Políticas, Projeto 2) vai rodar: a primeira EC2 com a página do assistente, a rede compartilhada `fiap-lab`, a camada web atrás de um load balancer, o state remoto no S3 e os ambientes `dev` e `prod`.
+Módulo prático da **Aula 2** da disciplina **Devops-CICD**. Aqui você, AI DevOps Engineer da **Quantum Commerce**, escreve em código a infraestrutura em que o **Quantum Commerce AI Customer Assistant** (o Assistente de Rastreio e Políticas, Projeto 2) vai rodar: a primeira EC2 com a página do assistente, a rede compartilhada `fiap-lab`, a camada web atrás de um load balancer, o state remoto no S3 e os ambientes `dev` e `prod`.
 
 São **5 demos guiadas em sala** e **2 exercícios** que você resolve sozinho.
 
@@ -23,7 +23,7 @@ Neste módulo respondemos à parte **reproduzível**, e usamos uma pergunta conc
 
 | Entrega | Ainda não entrega (e quando chega) |
 |---------|-------------------------------------|
-| Infraestrutura AWS do assistente descrita em código Terraform, criada e destruída por comando | **IA integrada.** Nenhum modelo, inferência ou RAG roda neste módulo. O assistente que busca nas políticas e cita a fonte (RAG extrativo, sem LLM) chega na Aula 4 (`03-CICD`); os quality gates bloqueantes e a observabilidade de GenAI, na Aula 5 (`04-GenAIOps`). |
+| Infraestrutura AWS do assistente descrita em código Terraform, criada e destruída por comando | **IA integrada.** Nenhum modelo, inferência ou RAG roda neste módulo. O assistente que busca nas políticas e cita a fonte (RAG extrativo, sem LLM) chega na Aula 4 (`03-CICD`), junto com os quality gates do pipeline. |
 | Uma página **estática** do AI Customer Assistant servida pelo Nginx, que diz qual máquina respondeu | **API de pedidos.** Status de pedido vem do sistema de origem e entra na Aula 4. |
 | State remoto compartilhado com lock e ambientes `dev`/`prod` isolados por workspace | **Deploy automático.** Aqui o `apply` ainda roda no seu terminal; o pipeline que roda por você chega na Aula 4. |
 

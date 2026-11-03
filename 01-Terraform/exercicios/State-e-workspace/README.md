@@ -263,7 +263,7 @@ A pasta `~/exercicio-state` com os seus `.tf`, conectada ao bucket S3 e validada
 
 **1. Crie a pasta do seu projeto, fora do clone do curso**
 
-Os seus arquivos ficam fora de `/workspaces/FIAP-AI-Devops-CICD` para não se misturarem com o material do curso (que é um repositório Git) nem com as pastas das demos.
+Os seus arquivos ficam fora de `/workspaces/FIAP-Devops-CICD` para não se misturarem com o material do curso (que é um repositório Git) nem com as pastas das demos.
 
 ```bash
 mkdir -p ~/exercicio-state
@@ -918,7 +918,7 @@ Antes de pedir ajuda, colete: (1) em que passo está, (2) o erro literal do term
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 
 </blockquote>

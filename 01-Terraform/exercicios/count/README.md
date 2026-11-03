@@ -169,7 +169,7 @@ mkdir -p ~/exercicio-count && cd ~/exercicio-count && pwd
 > /home/vscode/exercicio-count
 > ```
 
-O caminho **não** pode conter `FIAP-AI-Devops-CICD`. Por quê: o `terraform init` cria uma pasta `.terraform/` e o `apply` cria o arquivo de estado (`terraform.tfstate`). Dentro do clone do curso, esses arquivos atrapalhariam o seu próximo `git pull` do material da aula. Numa pasta própria, o seu código e o seu estado ficam isolados.
+O caminho **não** pode conter `FIAP-Devops-CICD`. Por quê: o `terraform init` cria uma pasta `.terraform/` e o `apply` cria o arquivo de estado (`terraform.tfstate`). Dentro do clone do curso, esses arquivos atrapalhariam o seu próximo `git pull` do material da aula. Numa pasta própria, o seu código e o seu estado ficam isolados.
 
 ---
 
@@ -364,7 +364,7 @@ O exercício está concluído quando **todos** os itens abaixo forem verdadeiros
 
 | # | Critério | Como conferir |
 |---|----------|---------------|
-| **C1** | O código fica em `~/exercicio-count`, com **um único** `resource "aws_sqs_queue"` usando `count` e uma variável numérica | leitura do seu `.tf`; `pwd` do [passo 2](#passo-2) sem `FIAP-AI-Devops-CICD` |
+| **C1** | O código fica em `~/exercicio-count`, com **um único** `resource "aws_sqs_queue"` usando `count` e uma variável numérica | leitura do seu `.tf`; `pwd` do [passo 2](#passo-2) sem `FIAP-Devops-CICD` |
 | **C2** | Com a variável em 3, o plano mostra `Plan: 3 to add, 0 to change, 0 to destroy.` e os nomes `qc-catalog-classification-01`, `-02`, `-03` | [passo 4](#passo-4) |
 | **C3** | Depois do apply, `aws sqs list-queues --queue-name-prefix qc-catalog` lista **exatamente 3** URLs terminadas em `-01`, `-02`, `-03`, e o console SQS mostra 3 filas Standard | [passo 5](#passo-5) |
 | **C4** | A fila `-01` tem as tags `Project = quantum-commerce` e `ManagedBy = terraform` | `list-queue-tags` do [passo 5](#passo-5) ou aba **Tags** no console |
@@ -592,7 +592,7 @@ Antes de pedir ajuda, colete estas 4 informações:
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 
 </blockquote>

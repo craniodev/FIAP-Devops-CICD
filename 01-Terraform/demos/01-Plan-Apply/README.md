@@ -85,7 +85,7 @@ Você terá criado e destruído uma instância EC2 inteiramente via Terraform, e
 **1.** No terminal do Codespaces, entre na pasta do exemplo mais simples:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 ```
 
 ---
@@ -98,6 +98,7 @@ cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform init
 ```
 
+<!-- TROCAR-IMAGEM: images/terraforminit.png | motivo: o prompt mostra o caminho da disciplina anterior /workspaces/FIAP-AI-Devops-CICD | capturar: a mesma tela no Codespaces do repositório FIAP-Devops-CICD -->
 ![init](images/terraforminit.png)
 
 > Saída esperada (a linha que importa; o resto da saída varia):
@@ -130,7 +131,7 @@ Documentação oficial: [terraform init](https://developer.hashicorp.com/terrafo
 **3.** Gere o plano de execução para conferir o que será criado **antes** de criar:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform plan
 ```
 
@@ -166,7 +167,7 @@ Documentação oficial: [terraform plan](https://developer.hashicorp.com/terrafo
 **4.** Aplique o plano para criar o recurso de verdade na AWS:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform apply -auto-approve
 ```
 
@@ -295,7 +296,7 @@ Tags servem também para organização e billing (`env = "prod"`, `team = "plata
 **6.** Destrua o recurso:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform destroy -auto-approve
 ```
 
@@ -322,7 +323,7 @@ terraform destroy -auto-approve
 **8.** Volte uma pasta para preparar a Parte 2:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply
 ```
 
 ### Checkpoint
@@ -405,7 +406,7 @@ As duas últimas linhas devem imprimir as versões. Depois disso, siga para o pa
 **10.** Entre na pasta do exemplo provisionado via SSM:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 ```
 
 Esta pasta cria a EC2 com o instance profile `LabInstanceProfile` (que já carrega a permissão SSM no Learner Lab) e provisiona o Nginx via SSM — sem chave privada, sem porta 22.
@@ -417,7 +418,7 @@ Esta pasta cria a EC2 com o instance profile `LabInstanceProfile` (que já carre
 **11.** Inicialize:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 terraform init
 ```
 
@@ -434,7 +435,7 @@ terraform init
 **12.** Gere o plano:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 terraform plan
 ```
 
@@ -623,7 +624,7 @@ Por que apagar as regras que já existiam? A regra padrão do Security Group `de
 **17.** De volta ao Codespaces, provisione a máquina. Acompanhe o output: o Terraform cria a EC2, espera ela ficar `Online` no SSM e então **mostra o log do `script.sh`** (a instalação do Nginx) dentro do próprio `apply`:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 terraform apply -auto-approve
 ```
 
@@ -675,7 +676,7 @@ A sua tela deve ficar assim: o status no topo diz "página servida pela instânc
 Para validar pelo terminal do Codespaces, sem depender do navegador:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 curl -s -i "http://$(terraform output -raw ec2_dns)/" | grep -E "HTTP/|<title>|Servido por"
 ```
 
@@ -708,7 +709,7 @@ Um **timeout** (o navegador fica carregando, o `curl` não responde) quase sempr
 - **403 Forbidden ou 404 Not Found:** o Nginx respondeu, mas não achou um `index.html` legível no docroot (`/usr/share/nginx/html`). Rodar `terraform apply` de novo não adianta: o código não mudou, então ele responde `No changes`. Force o reenvio só do provisionamento, sem recriar a EC2, com o comando abaixo, e confira no log as linhas `nginx: active` e `pagina: ...`.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 terraform apply -replace=terraform_data.provisiona -auto-approve
 ```
 
@@ -748,7 +749,7 @@ O provisionamento via SSM roda na sua máquina (Codespaces) e precisa da AWS CLI
 **19.** Destrua os recursos e confirme no [painel EC2](https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#Instances:) que nada mais está rodando:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2-ssh
 terraform destroy -auto-approve
 ```
 
@@ -785,7 +786,7 @@ Você vai aprender a distinguir os três símbolos do `plan` (`+` criar, `~` alt
 **20.** Volte para a pasta da EC2 simples (sem provisionamento) e suba uma instância:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform apply -auto-approve
 ```
 
@@ -804,7 +805,7 @@ terraform apply -auto-approve
 **21.1.** Abra o arquivo `instance.tf` no editor (o terminal continua na pasta `EC2` do passo 20):
 
 ```bash
-code /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2/instance.tf
+code /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2/instance.tf
 ```
 
 **21.2.** Apague **todo** o conteúdo do arquivo, cole exatamente o texto abaixo no lugar (a única diferença é o novo bloco `tags`) e salve (**File → Save**, ou `Ctrl+S` / `Cmd+S`):
@@ -823,7 +824,7 @@ resource "aws_instance" "example" {
 **21.3.** Rode o `plan` e **leia a saída**:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform plan
 ```
 
@@ -856,7 +857,7 @@ Documentação oficial: [Terraform plan](https://developer.hashicorp.com/terrafo
 **21.4.** Aplique a tag (é uma alteração in-place, rápida):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform apply -auto-approve
 ```
 
@@ -875,7 +876,7 @@ terraform apply -auto-approve
 **22.1.** Abra novamente o arquivo `instance.tf` no editor:
 
 ```bash
-code /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2/instance.tf
+code /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2/instance.tf
 ```
 
 **22.2.** Apague **todo** o conteúdo do arquivo e cole exatamente o texto abaixo no lugar (é o arquivo inteiro — a única diferença em relação ao passo 21 é a nova linha `availability_zone`):
@@ -897,7 +898,7 @@ resource "aws_instance" "example" {
 **22.4.** Rode o `plan`:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform plan
 ```
 
@@ -926,7 +927,7 @@ Cada atributo de um recurso é marcado pelo provider como *updatable in-place* o
 **23.1.** Abra novamente o arquivo `instance.tf` no editor:
 
 ```bash
-code /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2/instance.tf
+code /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2/instance.tf
 ```
 
 **23.2.** Apague **todo** o conteúdo do arquivo e cole exatamente o texto abaixo no lugar (é o arquivo inteiro — voltamos ao estado do passo 21, **sem** a linha `availability_zone`):
@@ -947,7 +948,7 @@ resource "aws_instance" "example" {
 **23.4.** Rode **somente** o `plan` e **leia a saída com atenção**:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform plan
 ```
 
@@ -957,7 +958,7 @@ terraform plan
 **23.5.** Agora sim, destrua a instância:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform destroy -auto-approve
 ```
 
@@ -995,7 +996,7 @@ Você vai criar uma EC2 por código, **alterá-la pelo console/CLI da AWS** (sim
 **24.** Suba a EC2 simples de novo e guarde o ID dela numa variável de shell. A pasta `EC2` tem um `outputs.tf` que expõe o `instance_id`, então usamos `terraform output -raw` (saída limpa, sem formatação):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform apply -auto-approve
 INSTANCE_ID=$(terraform output -raw instance_id)
 echo "Instância gerenciada pelo Terraform: $INSTANCE_ID"
@@ -1027,7 +1028,7 @@ aws ec2 create-tags --resources "$INSTANCE_ID" --tags Key=MexidoNaMao,Value=sim 
 **26.** Peça um `plan`. O Terraform compara o estado real (que ele relê da AWS) com o código e **detecta o drift**:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform plan
 ```
 
@@ -1057,7 +1058,7 @@ Documentação oficial: [Manage resource drift](https://developer.hashicorp.com/
 **27.1.** Reconcilie a infra com o código e **leia a saída com atenção**:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform apply -auto-approve
 ```
 
@@ -1073,7 +1074,7 @@ terraform apply -auto-approve
 **27.2.** Agora sim, destrua a instância:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform destroy -auto-approve
 ```
 
@@ -1108,7 +1109,7 @@ Você vai inspecionar o estado do Terraform — a estrutura que ele usa para sab
 **28.** Suba a EC2 mais uma vez e liste o que o Terraform está rastreando:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform apply -auto-approve
 terraform state list
 ```
@@ -1122,7 +1123,7 @@ Você verá `data.aws_ami.amazon_linux` e `aws_instance.example` — os objetos 
 **29.** Veja os detalhes do recurso no estado:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform state show aws_instance.example
 ```
 
@@ -1151,7 +1152,7 @@ Documentação oficial: [Purpose of Terraform state](https://developer.hashicorp
 **30.** Destrua para encerrar o lab:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/01-Plan-Apply/EC2
 terraform destroy -auto-approve
 ```
 
@@ -1253,7 +1254,7 @@ Antes de pedir ajuda, colete estas 4 informações — elas aceleram muito a res
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 - **Antes de tudo**: a causa nº 1 de erro aqui é credencial AWS expirada — rode `aws sts get-caller-identity`; se falhar, atualize as credenciais do Academy no Codespaces.
 

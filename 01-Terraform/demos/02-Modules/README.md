@@ -123,7 +123,7 @@ Uma VPC com uma subnet pública por zona de disponibilidade e um Internet Gatewa
 **1.** Entre na pasta que invoca o módulo de VPC:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
 ```
 
 ---
@@ -133,7 +133,7 @@ cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
 **2.** Inicialize (note que o `init` também baixa o módulo local `../VPC`):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
 terraform init
 ```
 
@@ -146,7 +146,7 @@ terraform init
 **3.** Gere o plano (ele só **mostra** o que será criado, sem criar nada):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
 terraform plan
 ```
 
@@ -174,7 +174,7 @@ São 8 recursos: 1 VPC, 1 Internet Gateway e 6 subnets (us-east-1 tem 6 zonas de
 > Saída vazia: siga com o `apply` abaixo. Saiu um `vpc-...`: a rede já existe; pule para o [passo 5](#passo-5).
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call
 terraform apply -auto-approve
 ```
 
@@ -332,7 +332,7 @@ Uma route table apontando para o Internet Gateway, associada a todas as subnets 
 **6.** Volte para a pasta de módulos e entre na que invoca as route tables:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
 ```
 
 > [!NOTE]
@@ -345,7 +345,7 @@ cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
 **7.** Inicialize:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
 terraform init
 ```
 
@@ -356,7 +356,7 @@ terraform init
 **8.** Gere o plano:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
 terraform plan
 ```
 
@@ -384,7 +384,7 @@ O módulo de rotas procura a VPC pela tag `Name = fiap-lab` e não achou. A Part
 **9.** Aplique:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/RT-call
 terraform apply -auto-approve
 ```
 
@@ -473,8 +473,8 @@ Documentação oficial: [aws_route_table](https://registry.terraform.io/provider
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=fiap-lab" --query "Vpcs[0].VpcId" --output text)
 aws ec2 describe-route-tables --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=to-igw-fiap-lab" \
   --query "RouteTables[0].{rotas:Routes[].[DestinationCidrBlock,GatewayId],associacoes:length(Associations)}" --output json
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call && terraform plan
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/RT-call && terraform plan
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/vpc-call && terraform plan
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/RT-call && terraform plan
 ```
 
 > Saída esperada: o JSON mostra a rota `0.0.0.0/0` apontando para um `igw-...` e `"associacoes": 6`. Os dois `plan` terminam com:
@@ -510,7 +510,7 @@ Você vai pegar um recurso que existe na AWS mas **não** está no seu código, 
 **11.** Crie um Security Group **por fora do Terraform** (simulando o que alguém fez no console), na VPC `fiap-lab` que você acabou de criar:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=fiap-lab" --query "Vpcs[0].VpcId" --output text)
 SG_ID=$(aws ec2 create-security-group \
   --group-name quantum-legado-sg \
@@ -548,7 +548,7 @@ Use o mesmo comando sempre que um passo adiante reclamar de `sg_id` vazio.
 **12.** Entre na pasta `import-demo`, que **já existe no repositório** com o arquivo `import.tf` pronto. Você **não precisa criar nem editar nada aqui** — só entrar e abrir o arquivo para ver o que ele faz:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 code import.tf
 ```
 
@@ -607,7 +607,7 @@ Documentação oficial: [Import block](https://developer.hashicorp.com/terraform
 **13.** Inicialize e rode o `plan`, passando o ID do Security Group pela variável `sg_id` (a variável `$SG_ID` já está no seu terminal desde o passo 11). O Terraform mostra `1 to import` — ele vai **adotar** o recurso, não criar um novo:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 terraform init
 terraform plan -var "sg_id=$SG_ID"
 ```
@@ -637,7 +637,7 @@ A variável `$SG_ID` está vazia: o terminal foi reaberto depois do passo 11. Re
 **14.** Aplique a adoção e confirme que o recurso entrou no estado:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 terraform apply -auto-approve -var "sg_id=$SG_ID"
 terraform state list
 ```
@@ -677,7 +677,7 @@ Você vai renomear o recurso importado usando um **`moved` block**, provando que
 **15.** Agora vamos **renomear** o recurso de `legado` para `quantum` sem destruí-lo. A adoção (import) já aconteceu, então faça **três pequenas mudanças** no `import.tf`. Abra o arquivo:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 code import.tf
 ```
 
@@ -722,7 +722,7 @@ resource "aws_security_group" "quantum" {
 **16.** Rode o `plan` (continue passando o `-var`). A mensagem-chave é `has moved to`, e o resumo é `0 to add, 0 to change, 0 to destroy`:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 terraform plan -var "sg_id=$SG_ID"
 ```
 
@@ -757,7 +757,7 @@ Documentação oficial: [moved block](https://developer.hashicorp.com/terraform/
 **17.1.** Aplique o `moved`:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 terraform apply -auto-approve -var "sg_id=$SG_ID"
 ```
 
@@ -767,7 +767,7 @@ terraform apply -auto-approve -var "sg_id=$SG_ID"
 **17.2.** Destrua **só o Security Group** da demo. Ele existiu apenas para o exercício de import/moved. Este `destroy` roda dentro de `import-demo`, cujo estado conhece um único recurso (o SG); a VPC e as route tables pertencem aos estados de `vpc-call` e `RT-call` e não são tocadas:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/02-Modules/import-demo
 terraform destroy -auto-approve -var "sg_id=$SG_ID"
 ```
 
@@ -782,7 +782,7 @@ Se o número for diferente de `1`, pare e confira se você está na pasta `impor
 **17.3.** Desfaça a edição que o passo 15 fez no `import.tf`, para o arquivo voltar ao original e o `git pull` da próxima aula não esbarrar nele:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD && git restore 01-Terraform/demos/02-Modules/import-demo/import.tf && git status --short 01-Terraform/demos/02-Modules/import-demo/import.tf
+cd /workspaces/FIAP-Devops-CICD && git restore 01-Terraform/demos/02-Modules/import-demo/import.tf && git status --short 01-Terraform/demos/02-Modules/import-demo/import.tf
 ```
 
 > Saída esperada: nenhuma linha (o arquivo voltou a ser igual ao do repositório).
@@ -848,7 +848,7 @@ Antes de pedir ajuda, colete estas 4 informações:
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 - **Antes de tudo**: se o `RT-call` reclamar que não acha a VPC, confirme que a Parte 1 (`vpc-call`) rodou com sucesso — o módulo de route table **descobre** a VPC por tag e precisa que ela exista.
 

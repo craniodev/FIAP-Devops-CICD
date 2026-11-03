@@ -97,7 +97,7 @@ O Assistente de Políticas é um **RAG extrativo**. *RAG* (Retrieval-Augmented G
 - **Faz:** busca nas seis políticas versionadas no repositório (trocas, devoluções, entrega e frete, garantia de eletrônicos, Black Friday e status do pedido), devolve o trecho mais relevante e diz de qual documento e seção ele veio.
 - **Faz:** recusa a pergunta que não está nas políticas, em vez de inventar.
 - **Faz:** quando você informa o número do pedido, busca o status na **API de pedidos** (DynamoDB). Status de pedido é dado transacional, vem do sistema de origem, nunca de um documento.
-- **Não faz:** gerar texto com LLM. O Bedrock está bloqueado no AWS Academy Learner Lab, e o LLM gerativo, com a avaliação por juiz, é tema da Aula 5.
+- **Não faz:** gerar texto com LLM. O Bedrock está bloqueado no AWS Academy Learner Lab, e o LLM gerativo, com a avaliação por juiz, fica fora do escopo da disciplina.
 
 O pipeline que você monta hoje é o mesmo que vai proteger o assistente quando o LLM entrar: muda a peça do meio, não a esteira.
 
@@ -172,9 +172,9 @@ Este bloco só vale para quem fez o módulo 02 **antes** de o assistente entrar 
 Atualize o repositório do curso e copie o projeto de novo por cima da sua cópia. A pasta `.git` da sua cópia é preservada, então o remote do GitLab continua o mesmo:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/
+cd /workspaces/FIAP-Devops-CICD/
 git pull origin master
-cp -frv /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/primeiro-projeto/ /home/vscode/environment/
+cp -frv /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/primeiro-projeto/ /home/vscode/environment/
 ls /home/vscode/environment/primeiro-projeto/src
 ```
 
@@ -785,7 +785,7 @@ Antes de pedir ajuda, junte estas 4 informações:
 
 Canais, em ordem:
 
-- **Issues do repositório:** [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório:** [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor:** `Rafael@rfbarbosa.com`
 - **LinkedIn:** [rafael-barbosa-serverless](https://www.linkedin.com/in/rafael-barbosa-serverless/)
 

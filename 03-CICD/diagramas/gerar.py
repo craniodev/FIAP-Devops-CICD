@@ -277,8 +277,8 @@ def arquitetura():
 
     # --- Legenda ---
     d.caixa(60, 1060, 1360, 190, "Legenda", TEXTO, bg="#f8f9fa")
-    d.texto("Sem LLM nesta aula: o assistente recupera e cita. A geração "
-            "com LLM e a avaliação com juiz chegam na Aula 5.", 80, 1100,
+    d.texto("Sem LLM nesta disciplina: o assistente recupera e cita. A "
+            "geração com LLM e a avaliação com juiz ficam fora do escopo.", 80, 1100,
             1320, size=19, align="left")
     d.seta([(80, 1172), (140, 1172)], cor=TEXTO, largura=3)
     d.texto("fluxo principal", 155, 1162, 200, size=16, align="left")

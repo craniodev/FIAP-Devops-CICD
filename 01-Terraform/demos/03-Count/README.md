@@ -171,7 +171,7 @@ As duas últimas linhas devem imprimir as versões. Depois disso, siga para o pa
 O `init` baixa os providers que a demo usa (`aws` e `http`). Ele não cria nada na AWS.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform init
 ```
 
@@ -190,7 +190,7 @@ terraform init
 O `plan` mostra o que **vai** ser criado, sem criar nada. Repare que nenhum recurso de rede aparece na lista: a rede é só lida.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform plan
 ```
 
@@ -380,7 +380,7 @@ O `fleet_size` nos gatilhos é o que mantém a página honesta: ela diz "Instân
 O `apply` cria os 10 recursos do plano. As duas EC2 são provisionadas **em paralelo**: cada uma espera ficar `Online` no SSM, recebe o `script.sh` e a página, e devolve o log. A parte mais demorada é o ALB, que leva uns 2 a 3 minutos para ficar pronto.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform apply -auto-approve
 ```
 
@@ -439,7 +439,7 @@ Pode rodar `terraform apply -auto-approve` quantas vezes precisar: ele retoma de
 Registrar uma EC2 no target group não basta: o ALB só manda tráfego para ela depois de 2 verificações de saúde seguidas (`GET /` a cada 6 s). Este comando pergunta ao ALB o estado de cada máquina, de 6 em 6 segundos, até as duas ficarem saudáveis:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 TG_ARN=$(aws elbv2 describe-target-groups --names quantum-ai-tg --query "TargetGroups[0].TargetGroupArn" --output text)
 for i in $(seq 1 20); do
   ESTADOS=$(aws elbv2 describe-target-health --target-group-arn "$TG_ARN" \
@@ -459,7 +459,7 @@ done
 Com as duas `healthy`, rode o plano de novo para ver o aviso do check block sumir:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform plan
 ```
 
@@ -523,7 +523,7 @@ São duas verificações diferentes, feitas por quem tem papéis diferentes:
 Mostre o endereço do ALB:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 echo "http://$(terraform output -raw alb_public)/"
 ```
 
@@ -549,7 +549,7 @@ Recarregue a página algumas vezes (`F5`): o hostname muda entre as duas máquin
 - **O rodapé diz `pré-visualização local`**: a página chegou à máquina sem passar pelas trocas do `script.sh`. Force o reenvio da página para todas as máquinas, sem recriar nenhuma EC2:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform apply -replace='terraform_data.provisiona[0]' -replace='terraform_data.provisiona[1]' -auto-approve
 ```
 
@@ -565,7 +565,7 @@ terraform apply -replace='terraform_data.provisiona[0]' -replace='terraform_data
 Este comando faz 8 requisições seguidas ao ALB, guarda só a linha de status de cada resposta e conta quantas vezes cada máquina respondeu:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 ALB=$(terraform output -raw alb_public)
 for i in $(seq 1 8); do
   curl -s "http://$ALB/" | grep -oE 'Instância [0-9]+ de [0-9]+ atrás do ALB — servida por [a-z0-9.-]+'
@@ -615,13 +615,13 @@ Escalamos de 2 para 3 máquinas e voltamos para 2 mudando só o `count`, lendo o
 Abra o `main.tf` no editor do Codespaces:
 
 ```bash
-code /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count/main.tf
+code /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count/main.tf
 ```
 
 No bloco `resource "aws_instance" "web"`, troque `count = 2` por `count = 3` e salve (`Ctrl+S`). Se preferir não abrir o editor, este comando faz a mesma troca e mostra a linha alterada:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 sed -i 's/^  count = 2$/  count = 3/' main.tf
 grep -n '^  count = [0-9]' main.tf
 ```
@@ -642,7 +642,7 @@ grep -n '^  count = [0-9]' main.tf
 **10. Leia o plano da escala**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform plan
 ```
 
@@ -662,6 +662,7 @@ Leia com calma, porque é aqui que está a lição:
 - **`aws_instance.web[2]` e `aws_lb_target_group_attachment.web[2]`**: a máquina nova e o registro dela no ALB. As EC2 `[0]` e `[1]` **não aparecem**: elas não mudam.
 - **`terraform_data.provisiona[0]` e `[1]` `must be replaced`**: o "destroy" do resumo é só isto. Esses recursos não são máquinas: são o **envio da página**. Como a página de cada máquina diz "Instância N de M", e o M passou de 2 para 3, o Terraform reenvia a página para as máquinas antigas. Nenhuma EC2 é destruída.
 
+<!-- TROCAR-IMAGEM: images/plan.png | motivo: o prompt mostra o caminho da disciplina anterior /workspaces/FIAP-AI-Devops-CICD | capturar: a mesma tela no Codespaces do repositório FIAP-Devops-CICD -->
 ![Plano mostrando a escala para 3 máquinas](images/plan.png)
 
 ---
@@ -671,7 +672,7 @@ Leia com calma, porque é aqui que está a lição:
 **11. Aplique a escala e veja 3 máquinas respondendo**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform apply -auto-approve
 ```
 
@@ -687,7 +688,7 @@ terraform apply -auto-approve
 Agora espere a terceira máquina ficar `healthy` e repita o teste de balanceamento, com 12 requisições:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 TG_ARN=$(aws elbv2 describe-target-groups --names quantum-ai-tg --query "TargetGroups[0].TargetGroupArn" --output text)
 for i in $(seq 1 20); do
   ESTADOS=$(aws elbv2 describe-target-health --target-group-arn "$TG_ARN" \
@@ -734,7 +735,7 @@ No [painel EC2 → Target Groups](https://us-east-1.console.aws.amazon.com/ec2/h
 Sábado de manhã, a campanha acabou e a terceira máquina só gera custo. Volte o número:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 sed -i 's/^  count = 3$/  count = 2/' main.tf
 grep -n '^  count = [0-9]' main.tf
 terraform plan
@@ -761,7 +762,7 @@ O `count` sempre remove **do fim da lista**: sai a `web[2]`, a última que entro
 **13. Aplique a redução e confira 2 hostnames**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform apply -auto-approve
 ```
 
@@ -774,7 +775,7 @@ terraform apply -auto-approve
 Repita o teste de balanceamento:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 ALB=$(terraform output -raw alb_public)
 for i in $(seq 1 8); do
   curl -s "http://$ALB/" | grep -oE 'Instância [0-9]+ de [0-9]+ atrás do ALB — servida por [a-z0-9.-]+'
@@ -801,7 +802,7 @@ No console (`quantum-ai-tg` → aba **Targets**), a máquina removida passa uns 
 O `destroy` desta pasta remove apenas o que **esta pasta** criou: as 2 EC2, o ALB, o listener, o target group, os registros e o security group `quantum-ai-http`. A VPC, as subnets, o Internet Gateway e as rotas foram **lidos** (blocos `data`), não criados, então o Terraform não tem como destruí-los daqui.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/03-Count
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/03-Count
 terraform destroy -auto-approve
 ```
 
@@ -921,7 +922,7 @@ Antes de pedir ajuda, colete estas 4 informações:
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 
 </blockquote>

@@ -32,8 +32,8 @@ O Assistente de Políticas é um **RAG extrativo**: recebe a pergunta, **busca**
 
 | Faz | Ainda não faz (e por quê) |
 |-----|---------------------------|
-| Busca nas políticas e devolve o trecho com a fonte citada | **Não gera texto com LLM.** O Bedrock está bloqueado no Learner Lab, e o LLM gerativo é tema da Aula 5. |
-| Recusa pergunta fora do escopo das políticas, em vez de inventar | **Não tem avaliação com juiz (LLM-as-a-judge).** Também fica para a Aula 5. |
+| Busca nas políticas e devolve o trecho com a fonte citada | **Não gera texto com LLM.** O Bedrock está bloqueado no Learner Lab, e o LLM gerativo fica fora do escopo da disciplina. |
+| Recusa pergunta fora do escopo das políticas, em vez de inventar | **Não tem avaliação com juiz (LLM-as-a-judge).** Também fica fora do escopo da disciplina. |
 | Passa por testes de comportamento antes e depois do deploy | Não "conversa": cada pergunta é independente, sem memória de conversa. |
 
 Isso não é uma limitação escondida, é o recorte da aula. O que este módulo ensina vale igual quando o LLM entrar: **se ninguém mede o comportamento, cada deploy é uma aposta**. Trocar a busca por um modelo gerativo muda a peça do meio, não o pipeline que a protege.
@@ -73,4 +73,4 @@ O pipeline cria uma **API Gateway HTTP**, uma **Lambda** e uma tabela **DynamoDB
 
 ## Próximo passo
 
-Depois dos 2 labs deste módulo, prossiga para **[04 — GenAIOps e RAG na prática](../04-GenAIOps/README.md)** (Aula 5), sobre o mesmo `primeiro-projeto` e o mesmo runner: a demo 04.1 leva o assistente ao RAG com corpus versionado, API de pedidos e gates que **bloqueiam** o deploy; a demo 04.2 opera esse assistente com OpenTelemetry, SLOs e alerta de qualidade, e fecha a disciplina. Entre as aulas, deixe o runner **desligado** (passo 15 do Lab 03.2), não destruído: o destroy só acontece no fim da 04.2. O **[Trabalho Final](../Trabalho-final/README.md)** vem depois, na Aula 6.
+Depois dos 2 labs deste módulo, prossiga para o **[Trabalho Final](../Trabalho-final/README.md)**, onde você junta Terraform, Ansible e CI/CD num projeto entregável.

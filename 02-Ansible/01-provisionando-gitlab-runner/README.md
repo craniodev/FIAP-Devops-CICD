@@ -51,7 +51,7 @@ Vamos separar com clareza **quem faz o quê**: o **Terraform** cria a EC2 e prep
 - conectar o Ansible ao host criado via inventário (`hosts`), usando o connection plugin `community.aws.aws_ssm` (sem chave SSH, sem porta 22)
 - rodar um playbook que instala, configura e **registra** o GitLab Runner — lendo o token direto do SSM
 - conferir as ferramentas instaladas no runner e provar a **idempotência** rodando o playbook pela segunda vez
-- deixar o runner de pé para os módulos 03 e 04 (entre aulas ele fica desligado; a destruição acontece no fim da demo 04.2)
+- deixar o runner de pé para o módulo 03 (a destruição da infra acontece ao final do Lab 03.2)
 
 ## O que você terá ao final
 
@@ -139,7 +139,7 @@ Ao final desta etapa, você estará com o repositório atualizado e dentro da pa
 **1.** No **terminal do Codespaces**, entre na pasta principal do repositório e garanta que está com a versão mais atualizada do exercício:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/
+cd /workspaces/FIAP-Devops-CICD/
 git reset --hard && git pull origin master
 ```
 
@@ -153,7 +153,7 @@ git reset --hard && git pull origin master
 **2.** Entre na pasta do laboratório:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/
 ```
 
 ### Checkpoint
@@ -299,7 +299,7 @@ ssh-keygen -t rsa -b 2048 -C "gitlab key" -f /home/vscode/.ssh/gitlab
 
 **5.2.** Pressione **Enter duas vezes** para indicar que não quer senha para a chave.
 
-<!-- TROCAR-IMAGEM: img/gitlab-1.png | motivo: prompt mostra o caminho antigo /workspaces/FIAP-Platform-Engineering | capturar: saída do ssh-keygen no Codespaces em /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner -->
+<!-- TROCAR-IMAGEM: img/gitlab-1.png | motivo: prompt mostra o caminho antigo /workspaces/FIAP-Platform-Engineering | capturar: saída do ssh-keygen no Codespaces em /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner -->
 ![](img/gitlab-1.png)
 
 **5.3.** Abra a parte **pública** da chave no editor do Codespaces e copie todo o conteúdo para a área de transferência do seu computador:
@@ -308,7 +308,7 @@ ssh-keygen -t rsa -b 2048 -C "gitlab key" -f /home/vscode/.ssh/gitlab
 code /home/vscode/.ssh/gitlab.pub
 ```
 
-<!-- TROCAR-IMAGEM: img/gitlab-1.1.png | motivo: terminal mostra o caminho antigo FIAP-Platform-Engineering | capturar: gitlab.pub aberto no editor do Codespaces do repositório FIAP-AI-Devops-CICD -->
+<!-- TROCAR-IMAGEM: img/gitlab-1.1.png | motivo: terminal mostra o caminho antigo FIAP-Platform-Engineering | capturar: gitlab.pub aberto no editor do Codespaces do repositório FIAP-Devops-CICD -->
 ![](img/gitlab-1.1.png)
 
 **5.4.** Acesse a página de chaves SSH do seu GitLab: [Chaves SSH do GitLab](https://gitlab.com/-/user_settings/ssh_keys) e clique em **"Add new key"**.
@@ -399,7 +399,7 @@ git config --global user.email "SEU EMAIL DO GITLAB"
 
 ```bash
 mkdir -p /home/vscode/environment
-cp -frv /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/primeiro-projeto/ /home/vscode/environment/
+cp -frv /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/primeiro-projeto/ /home/vscode/environment/
 ls /home/vscode/environment/primeiro-projeto
 ```
 
@@ -610,7 +610,7 @@ Ao final desta etapa, você terá uma EC2 provisionada (já com Python/pip/awscl
 **17.** O runner será uma EC2 provisionada com Terraform. Entre na pasta com o código:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
 ```
 
 ---
@@ -674,7 +674,7 @@ Corrija o `state.tf` com o nome listado e rode `terraform init` novamente.
 **20.** Veja o que será criado:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
 terraform plan
 ```
 
@@ -693,7 +693,7 @@ Os 3 recursos são a EC2 `quantum-ai-gitlab-runner` (`aws_instance.runner`), o S
 **21.** Provisione a máquina que será o runner. Esse apply, além de criar a EC2, roda um script de bootstrap (`install-python.sh`) na máquina — **via SSM**, não SSH — para preparar tudo o que o Ansible vai precisar (Python, pip, awscli):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
 terraform apply -auto-approve
 ```
 
@@ -734,7 +734,7 @@ Documentação oficial:
 **22.** Copie o **instance id** da EC2 (algo como `i-0abc123...`) — vamos usá-lo no inventário do Ansible, já que a conexão é por SSM e não por IP:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner/
 terraform output -raw instance_id; echo
 ```
 
@@ -744,7 +744,7 @@ terraform output -raw instance_id; echo
 > i-0abc123def4567890
 > ```
 
-<!-- TROCAR-IMAGEM: img/gitlab-11.png | motivo: prompt mostra o caminho antigo FIAP-Platform-Engineering | capturar: terraform output -raw instance_id no repositório FIAP-AI-Devops-CICD -->
+<!-- TROCAR-IMAGEM: img/gitlab-11.png | motivo: prompt mostra o caminho antigo FIAP-Platform-Engineering | capturar: terraform output -raw instance_id no repositório FIAP-Devops-CICD -->
 ![](img/gitlab-11.png)
 
 ### Checkpoint
@@ -768,7 +768,7 @@ Ao final desta etapa, a EC2 estará configurada como GitLab Runner registrado e 
 **23.** Entre na pasta onde o Ansible será executado:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
 ```
 
 ---
@@ -778,7 +778,7 @@ cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ans
 **24.** O arquivo de **inventário** (`hosts`) diz ao Ansible quais máquinas acessar e como. Ele precisa de **dois** valores: o **instance id** da EC2 (do passo 22) como host, e o nome do **seu bucket S3** (`base-config-<SEU-RM>`) que o plugin SSM usa para transferir arquivos. O comando abaixo **descobre os dois automaticamente** e os grava no `hosts` (o instance id vem do Terraform da pasta ao lado; o bucket, do `aws s3 ls`):
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
 ID=$(terraform -chdir=../terraform-gitlab-runner output -raw instance_id)
 BUCKET=$(aws s3 ls | awk '{print $3}' | grep '^base-config' | head -1)
 sed -i "s|<INSTANCE ID DO SERVER>|$ID|" hosts
@@ -799,7 +799,7 @@ ansible_aws_ssm_region=us-east-1
 ansible_become=true
 ```
 
-<!-- TROCAR-IMAGEM: img/gitlab-12.png | motivo: prompt mostra o caminho antigo FIAP-Platform-Engineering | capturar: o mesmo bloco do passo 24 rodado no repositório FIAP-AI-Devops-CICD, com o cat hosts preenchido -->
+<!-- TROCAR-IMAGEM: img/gitlab-12.png | motivo: prompt mostra o caminho antigo FIAP-Platform-Engineering | capturar: o mesmo bloco do passo 24 rodado no repositório FIAP-Devops-CICD, com o cat hosts preenchido -->
 ![](img/gitlab-12.png)
 
 <details>
@@ -831,7 +831,7 @@ Documentação oficial:
 **25.** Execute o playbook que configura a EC2 como GitLab Runner. Como a conexão é via SSM, **não há `-u ubuntu` nem chave privada** — o Ansible usa as credenciais AWS já presentes no seu ambiente. O **token do runner é lido automaticamente do SSM** (o que você gravou no passo 16); você não passa o token aqui:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
 ansible-playbook -i hosts --extra-vars 'gitlab_runner_name=quantum-ai-gitlab-runner' play.yaml
 ```
 
@@ -923,7 +923,7 @@ Você confirma, de dentro da EC2, que as ferramentas que o módulo 03 usa estão
 No **terminal do Codespaces**, use o próprio Ansible (mesmo inventário, mesmo canal SSM) para rodar um comando de checagem dentro da EC2. Isso é um comando *ad hoc*: uma tarefa avulsa, sem playbook.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
 ansible runner -i hosts -m shell -a "terraform version | head -1; tflint --version | head -1; /opt/venv/bin/checkov --version; python3 --version; jq --version; aws --version; git --version; gitlab-runner --version | head -1; gitlab-runner verify 2>&1 | grep -o 'is valid'; grep -cE '^\[\[runners\]\]' /etc/gitlab-runner/config.toml; grep -E '^ +(name|executor) =' /etc/gitlab-runner/config.toml"
 ```
 
@@ -970,7 +970,7 @@ O playbook não chegou a instalar aquela ferramenta (por exemplo, parou no meio 
 Mesmo comando do passo 25, sem mudar nada:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
+cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/ansible-gitlab-runner/
 ansible-playbook -i hosts --extra-vars 'gitlab_runner_name=quantum-ai-gitlab-runner' play.yaml
 ```
 
@@ -995,7 +995,7 @@ Se você gerar um token novo no GitLab e regravar o parâmetro no SSM (passo 16)
 ## Conclusão
 
 > [!CAUTION]
-> **NÃO destrua o runner agora.** A EC2 que você acabou de configurar é o **mesmo runner que o módulo 03 (CI/CD) vai usar** para rodar os pipelines. Sem ela, os jobs do próximo módulo ficam parados em "stuck". Ela custa enquanto existir: a `t3.small` sai por ~US$ 0,02/h (~US$ 0,50 por dia, ~US$ 3,50 por semana), mais ~US$ 0,08/dia do disco de 30 GB. Entre uma aula e outra, **desligue** a EC2 como mostra o **[passo 15 do Lab 03.2](../../03-CICD/02-Validando-e-gerando-relatorios/README.md#passo-15)**; o `terraform destroy` do runner é o **último passo da demo 04.2** (Aula 5), depois que o módulo de GenAIOps também usou este runner. A rede `fiap-lab` não é destruída em nenhum desses momentos.
+> **NÃO destrua o runner agora.** A EC2 que você acabou de configurar é o **mesmo runner que o módulo 03 (CI/CD) vai usar** para rodar os pipelines. Sem ela, os jobs do próximo módulo ficam parados em "stuck". Ela custa enquanto existir: a `t3.small` sai por ~US$ 0,02/h (~US$ 0,50 por dia, ~US$ 3,50 por semana), mais ~US$ 0,08/dia do disco de 30 GB. O `terraform destroy` do runner está no **[passo 15 do Lab 03.2](../../03-CICD/02-Validando-e-gerando-relatorios/README.md#passo-15)**: rode lá, ao terminar o CI/CD, ou quando o curso acabar. A rede `fiap-lab` não é destruída em nenhum desses momentos.
 
 **O que você precisa ter para entrar no módulo 03:**
 
@@ -1068,7 +1068,7 @@ Antes de abrir issue/perguntar, colete estas 4 informações — elas reduzem o 
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 - **LinkedIn**: [rafael-barbosa-serverless](https://www.linkedin.com/in/rafael-barbosa-serverless/)
 - **Antes de tudo**: confira se o instance id em `hosts` bate com o `terraform output -raw instance_id` e se o `session-manager-plugin` está instalado (passo 3.5) — são as causas mais comuns de `UNREACHABLE` na conexão via SSM.

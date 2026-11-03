@@ -62,7 +62,7 @@ Um ambiente de trabalho cloud padronizado, com AWS CLI, Terraform e Ansible já 
 
 GitHub Codespaces é uma máquina de desenvolvimento que roda na nuvem e abre direto no navegador (ou no VS Code). Em vez de cada aluno instalar Terraform, Ansible, AWS CLI, Python e Node — cada um numa versão diferente, num sistema operacional diferente — todo mundo recebe **o mesmo container já configurado**.
 
-Por que isso importa na disciplina AI-Devops-CICD:
+Por que isso importa na disciplina Devops-CICD:
 
 - elimina o clássico "na minha máquina funciona" — o ambiente é idêntico para todos (o problema que Diego contou no primeiro dia)
 - o `.devcontainer/` do repositório descreve o ambiente como código (mesma filosofia de IaC que vamos estudar com Terraform)
@@ -90,13 +90,13 @@ A Quantum Commerce já tem protótipos das três iniciativas de IA, mas a infrae
 Ao final desta etapa, você terá um fork do repositório na sua conta GitHub e um Codespace em criação (ou já criado) a partir dele.
 
 > [!NOTE]
-> Os prints mostram IDs de turma ilustrativos e, em alguns casos, o nome antigo do repositório (`FIAP-Platform-Engineering`). No seu ambiente o nome é `FIAP-AI-Devops-CICD`; o resto da tela é igual. O **ID do laboratório (Learner Lab) correto será informado pelo professor**, específico para cada turma — use sempre o que o professor passar, não o que está nas imagens.
+> Os prints mostram IDs de turma ilustrativos e, em alguns casos, o nome do repositório de outra disciplina (`FIAP-Platform-Engineering`, `FIAP-AI-Devops-CICD`). No seu ambiente o nome é `FIAP-Devops-CICD`; o resto da tela é igual. O **ID do laboratório (Learner Lab) correto será informado pelo professor**, específico para cada turma — use sempre o que o professor passar, não o que está nas imagens.
 
 ---
 
 <a id="passo-1"></a>
 
-**1.** Vamos usar sua conta do GitHub para acessar o Codespaces. Caso não tenha uma conta, crie uma em [github.com](https://github.com). Em seguida, acesse o repositório da disciplina: [FIAP-AI-Devops-CICD](https://github.com/vamperst/FIAP-AI-Devops-CICD).
+**1.** Vamos usar sua conta do GitHub para acessar o Codespaces. Caso não tenha uma conta, crie uma em [github.com](https://github.com). Em seguida, acesse o repositório da disciplina: [FIAP-Devops-CICD](https://github.com/vamperst/FIAP-Devops-CICD).
 
 ---
 
@@ -144,7 +144,7 @@ Documentação oficial:
 
 **5.** Configure as opções da tela exatamente assim e clique em `Create Codespace`:
 
-- **Repository:** `<SEU-USUARIO>/FIAP-AI-Devops-CICD` (o seu fork)
+- **Repository:** `<SEU-USUARIO>/FIAP-Devops-CICD` (o seu fork)
 - **Branch:** `master`
 - **Dev container configuration:** `FIAP Lab`
 - **Region:** `US East`
@@ -528,7 +528,7 @@ Antes de abrir issue ou perguntar, colete estas 4 informações — elas reduzem
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório:** [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório:** [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor:** [Rafael@rfbarbosa.com](mailto:Rafael@rfbarbosa.com)
 - **Antes de tudo:** confira se a sessão do AWS Academy está ativa (bolinha verde) — a maioria dos erros de credencial é por sessão expirada.
 

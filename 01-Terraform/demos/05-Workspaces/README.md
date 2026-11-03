@@ -104,7 +104,7 @@ O backend S3 inicializado e os workspaces `dev` e `prod` criados, com você posi
 **1. Entre na pasta da demo**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 ls
 ```
 
@@ -123,7 +123,7 @@ ls
 O `state.tf` vem com o nome de exemplo `base-config-SEU-RM`. O bloco abaixo descobre o nome do seu bucket e grava no arquivo, sem você digitar nada:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 BUCKET=$(aws s3 ls | awk '/base-config-/{print $3; exit}')
 echo "Bucket encontrado: $BUCKET"
 [ -n "$BUCKET" ] && sed -i 's/bucket *= *"[^"]*"/bucket = "'"$BUCKET"'"/' state.tf || echo "ERRO: nenhum bucket base-config-* encontrado; confira as credenciais (Inicio-de-aula) e rode de novo"
@@ -156,7 +156,7 @@ O `aws s3 ls` não achou nenhum bucket começando com `base-config-`. Confira co
 **3. Inicialize o Terraform**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform init
 ```
 
@@ -173,7 +173,7 @@ terraform init
 Se aparecer `NoSuchBucket`, `bucket does not exist` ou `The value cannot be empty or all whitespace`, a linha `bucket` do `state.tf` está errada ou vazia. A forma mais simples de corrigir é repetir o [passo 2](#passo-2). Se preferir corrigir à mão, abra o arquivo com `code state.tf`, corrija a linha `bucket = "..."` para o nome que aparece em `aws s3 ls` e reconfigure o backend:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform init -reconfigure
 ```
 
@@ -238,7 +238,7 @@ Documentação oficial: [Workspaces](https://developer.hashicorp.com/terraform/l
 **4. Crie o workspace `dev`**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace new dev
 ```
 
@@ -270,7 +270,7 @@ Você já criou esse workspace antes (por exemplo, numa tentativa anterior). Nã
 **5. Crie o workspace `prod`**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace new prod
 ```
 
@@ -289,7 +289,7 @@ O `new` cria **e já entra** no workspace. Neste momento você está em `prod`.
 **6. Volte para o ambiente `dev`**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select dev
 ```
 
@@ -323,7 +323,7 @@ Cada workspace mantém um estado separado no backend. No S3, o Terraform grava o
 **7. Liste os workspaces**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace list
 ```
 
@@ -337,6 +337,7 @@ terraform workspace list
 
 O `default` foi criado automaticamente pelo Terraform e sempre existe.
 
+<!-- TROCAR-IMAGEM: images/workspacescommands.png | motivo: o prompt mostra o caminho da disciplina anterior /workspaces/FIAP-AI-Devops-CICD | capturar: a mesma tela no Codespaces do repositório FIAP-Devops-CICD -->
 ![Saída de terraform workspace list](images/workspacescommands.png)
 
 *Saída de `terraform workspace list`: o `*` marca o workspace atual.*
@@ -366,7 +367,7 @@ Cada workspace cria a sua própria EC2 com tamanho diferente (`dev` → `t3.micr
 Primeiro conferimos em que ambiente estamos; depois aplicamos. Usamos `-auto-approve` em todos os `apply` e `destroy` deste lab para pular a confirmação `yes`.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace show
 terraform apply -auto-approve
 terraform output instance_type
@@ -401,7 +402,7 @@ O Terraform não encontrou a VPC `fiap-lab` ou nenhuma subnet pública dentro de
 **9. Troque para `prod` e aplique o mesmo código**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select prod
 terraform apply -auto-approve
 terraform output instance_type
@@ -486,7 +487,7 @@ Dois arquivos de estado, um por workspace, cada um sabendo só da sua EC2. No [c
 Conferimos o workspace **antes** de destruir. Este é o hábito que evita apagar o ambiente errado.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select prod
 terraform workspace show
 terraform destroy -auto-approve
@@ -550,7 +551,7 @@ O `terraform test` confirma, **sem criar infraestrutura**, que o workspace `dev`
 **14. Volte para o `dev` e leia o arquivo de teste**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select dev
 cat tests/workspace.tftest.hcl
 ```
@@ -577,7 +578,7 @@ Em português: "faça um `plan` e confira que o tipo de instância calculado é 
 **15. Rode o teste**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace show
 terraform test
 ```
@@ -639,7 +640,7 @@ Documentação oficial: [Tests](https://developer.hashicorp.com/terraform/langua
 **16. Destrua a EC2 do `dev`**
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select dev
 terraform workspace show
 terraform destroy -auto-approve
@@ -666,7 +667,7 @@ Você já estava em `dev` desde o passo 14, então o `select` não imprime nada;
 Um workspace só pode ser apagado quando **não é o atual** e **não tem recursos**. Por isso voltamos para o `default` antes.
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select default
 terraform workspace delete dev
 terraform workspace delete prod
@@ -698,7 +699,7 @@ Workspace "prod" is currently tracking the following resource instances:
 Esse workspace ainda tem uma EC2. É uma proteção do Terraform: apagar o workspace agora faria ele "esquecer" uma máquina que continua cobrando na AWS. **Não use `-force`.** Destrua primeiro e apague depois:
 
 ```bash
-cd /workspaces/FIAP-AI-Devops-CICD/01-Terraform/demos/05-Workspaces
+cd /workspaces/FIAP-Devops-CICD/01-Terraform/demos/05-Workspaces
 terraform workspace select prod
 terraform destroy -auto-approve
 terraform workspace select default
@@ -830,7 +831,7 @@ Antes de pedir ajuda, colete estas 4 informações:
 
 Canais (em ordem de prioridade):
 
-- **Issues do repositório**: [github.com/vamperst/FIAP-AI-Devops-CICD/issues](https://github.com/vamperst/FIAP-AI-Devops-CICD/issues)
+- **Issues do repositório**: [github.com/vamperst/FIAP-Devops-CICD/issues](https://github.com/vamperst/FIAP-Devops-CICD/issues)
 - **E-mail do professor**: `Rafael@rfbarbosa.com`
 - **Antes de tudo**: confira em qual workspace você está com `terraform workspace show`. Muito "por que a instância não mudou de tamanho?" é só estar no workspace errado.
 
