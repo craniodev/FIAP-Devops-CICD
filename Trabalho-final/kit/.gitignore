@@ -1,0 +1,23 @@
+# Diretorio de trabalho do terraform init (providers baixados, backend local).
+# Cada job do pipeline recria com init; versionar so incharia o repositorio.
+.terraform/
+
+# State e plan nunca vao para o Git: o state vive no S3 (backend) e o plan e
+# artefato do pipeline, gerado e consumido dentro do mesmo pipeline.
+*.tfstate
+*.tfstate.*
+*.tfplan
+plan-*.json
+
+# Relatorios JUnit gerados pelo pytest e pelo Checkov no pipeline.
+contrato-*.xml
+smoke-*.xml
+checkov-report.xml
+
+.pytest_cache/
+__pycache__/
+
+# O .terraform.lock.hcl NAO entra aqui de proposito. Versionado, ele fixa a mesma
+# versao do provider AWS no Codespaces e no runner, e e o que liga o cache de
+# providers do pipeline (TF_PLUGIN_CACHE_DIR): sem lock, cada job baixa o provider
+# AWS (centenas de MB) de novo no terraform init.

@@ -123,7 +123,7 @@ Os primeiros labs constroem, peça por peça, a base de engenharia que vai suste
 | 02.1 | **Ansible: GitLab Runner** | EC2 criada com Terraform e configurada por um playbook Ansible até virar um GitLab Runner próprio, com acesso via SSM e token guardado no Parameter Store. | [01-provisionando-gitlab-runner](02-Ansible/01-provisionando-gitlab-runner/README.md) |
 | 03.1 | **CI/CD: Primeiro pipeline** | `.gitlab-ci.yml` com `plan` (CI) e `apply` (CD) a cada push na `master`, subindo uma API serverless (API Gateway, Lambda e DynamoDB). | [01-Primeiro-pipeline](03-CICD/01-Primeiro-pipeline/README.md) |
 | 03.2 | **CI/CD: Validação e relatórios** | Stage `validate` com `terraform fmt`/`validate`, TFLint, Checkov, `terraform test` e validação do código da Lambda, com relatório JUnit na aba **Tests** do GitLab. | [02-Validando-e-gerando-relatorios](03-CICD/02-Validando-e-gerando-relatorios/README.md) |
-| 04 | **Trabalho Final** | Demo Count transformada em módulo, estado remoto, workspaces `dev`/`prod` e pipeline de 3 etapas (validar, gate de segurança, aplicar) no runner próprio. Entrega em `.zip`. | [Trabalho-final](Trabalho-final/README.md) |
+| 04 | **Trabalho Final** | `make bootstrap` prepara projeto GitLab e runner próprio; você transforma a demo Count em módulo, com estado remoto e workspaces `dev`/`prod`, e escreve o pipeline de 5 stages (validar, planejar, contrato, deploy, smoke) que testa e entrega os dois ambientes. Entrega em `.zip`. | [Trabalho-final](Trabalho-final/README.md) |
 
 ---
 

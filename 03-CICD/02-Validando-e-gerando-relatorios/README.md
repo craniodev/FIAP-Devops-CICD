@@ -687,7 +687,7 @@ aws ec2 stop-instances --region us-east-1 --instance-ids $RUNNER_ID
 
 Para voltar a usar, troque `stop-instances` por `start-instances` no último comando e espere ~1 min até o runner aparecer **online** no GitLab.
 
-**15.2. Ao terminar o módulo 03: destrua.** O Trabalho Final **não** reaproveita este runner: ele sobe um runner novo, registrado no projeto `trabalho-final`, com o script da Parte 0 dele. Destruir aqui evita custo e evita que o runner antigo continue preso ao `primeiro-projeto`:
+**15.2. Ao terminar o módulo 03: destrua.** O Trabalho Final **não** reaproveita este runner: ele sobe um runner novo, registrado no projeto `trabalho-final`, com o `make bootstrap` da Parte 0 dele. Destruir aqui evita custo e evita que o runner antigo continue preso ao `primeiro-projeto`:
 
 ```bash
 cd /workspaces/FIAP-Devops-CICD/02-Ansible/01-provisionando-gitlab-runner/terraform-gitlab-runner
